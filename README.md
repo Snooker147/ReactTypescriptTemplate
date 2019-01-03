@@ -10,10 +10,10 @@ This template project includes following packages:
 - Font Awesome (Free Version)
 
 # Scripts
-npm install => Required for first time use. Installs all required packages (surprisingly)
-npm start => Launching development server
-npm run-script build => Building the entire project to dist/build
-npm run-script start-https => HTTPS Development Server (read below)
+- npm install => Required for first time use. Installs all required packages (surprisingly)
+- npm start => Launching development server
+- npm run-script build => Building the entire project to dist/build
+- npm run-script start-https => HTTPS Development Server (read below)
 
 # HTTPS Development Server
 HTTPS Dev server configuration is supported with npm scripts. Before you start using HTTPS connection you must first create self-signed certificates for your dev server to use. You can either use the batch file script-make-certificates that will automatically generate certificates using OpenSSL for you (note that you need to have OpenSSL installed on your system).
