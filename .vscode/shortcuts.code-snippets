@@ -1,0 +1,61 @@
+{
+	"ImportEverythingAs": {
+		"prefix": "ImportEverythingAs",
+		"body": "import * as $1 from \"package\";"
+	},
+	"ImportReact": {
+		"prefix": "ImportReact",
+		"body": "import * as React from \"react\";"
+	},
+	"ImportReactDOM": {
+		"prefix": "ImportReactDOM",
+		"body": "import * as ReactDOM from \"react-dom\";"
+	},
+	"NewReactComponent": {
+		"prefix": "NewReactComponent",
+		"body": [
+			"import * as React from \"react\";",
+			"",
+			"// Props Structure",
+			"export interface ${TM_FILENAME_BASE}Props { }",
+			"// State Structure",
+			"export interface ${TM_FILENAME_BASE}State { }",
+			"",
+			"export default class ${TM_FILENAME_BASE} extends React.Component<${TM_FILENAME_BASE}Props, ${TM_FILENAME_BASE}State>",
+			"{",
+			"\t",
+			"\tpublic constructor(props: ${TM_FILENAME_BASE}Props)",
+			"\t{",
+			"\t\tsuper(props);",
+			"\t}",
+			"\t",
+			"\tpublic render()",
+			"\t{",
+			"\t\treturn (",
+			"\t\t\t<div>",
+			"\t\t\t\t$1",
+			"\t\t\t</div>",
+			"\t\t);",
+			"\t}",
+			"",
+			"}"
+		]
+	},
+	"NewReactFuncComponent": {
+		"prefix": "NewReactFuncComponent",
+		"body": [
+			"import * as React from \"react\";",
+			"",
+			"// Props Structure",
+			"export interface ${TM_FILENAME_BASE}Props { }",
+			"",
+			"export default (p: ${TM_FILENAME_BASE}Props) => {",
+			"\treturn (",
+			"\t\t<div>",
+			"\t\t\t$1",
+			"\t\t</div>",
+			"\t);",
+			"}",
+		]
+	}
+}
