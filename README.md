@@ -8,6 +8,7 @@ This template project includes following packages:
 - SASS (and CSS minifier for production)
 - HTML Template
 - Font Awesome (Free Version)
+- JQuery
 
 # Scripts
 - npm install => Required for first time use. Installs all required packages (surprisingly)
@@ -21,6 +22,8 @@ You can also make them yourself if you like. By default files "serverkey.pem" an
 
 Then simply start the dev server using "npm run-script start-https" or script-start-https batch file.
 
+# JQuery
+jQuery is included with this project, though you dont have to or need to use it. As React itself states, it's not recommended to use libraries like jQuery with React, but sometimes it's just easier to use jQuery for things like lazy animations and so on. Use it at your own risk. 
 
 # Windows Scripts
 You can also use script by simply running the batch files if you're too lazy to issue them yourself.

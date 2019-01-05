@@ -15,6 +15,7 @@ const isRelease = process.argv.indexOf("--release") !== -1;
 const useHTTPS = process.argv.indexOf("--use-https") !== -1;
 
 // Third parties for development
+let jqueryPath = "jquery.js";
 let reactPath = "react.development.js";
 let reactDomPath = "react-dom.development.js";
 let fontAwesomeTag = "fontawesome-free/css/all.min.css";
@@ -22,6 +23,7 @@ let fontAwesomeTag = "fontawesome-free/css/all.min.css";
 // Here for production we want to use CDN
 if(isRelease)
 {
+    jqueryPath = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js";
     reactPath = "https://cdnjs.cloudflare.com/ajax/libs/react/16.7.0/umd/react.production.min.js";
     reactDomPath = "https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.7.0/umd/react-dom.production.min.js";
     fontAwesomeTag = "https://use.fontawesome.com/releases/v5.6.3/css/all.css";
@@ -97,6 +99,7 @@ module.exports = {
                 removeComments: true
             } : false,
             filename: "index.html",
+            jquery: jqueryPath,
             react: reactPath,
             reactDom: reactDomPath,
             fontawesome: fontAwesomeTag,
@@ -119,7 +122,8 @@ module.exports = {
             `${__dirname}/dist`,
             `${__dirname}/node_modules/react/umd`,
             `${__dirname}/node_modules/react-dom/umd`,
-            `${__dirname}/node_modules/@fortawesome`
+            `${__dirname}/node_modules/@fortawesome`,
+            `${__dirname}/node_modules/jquery/dist`
         ],
         https: useHTTPS ? {
             key: fs.readFileSync(`${__dirname}/certs/serverkey.pem`),

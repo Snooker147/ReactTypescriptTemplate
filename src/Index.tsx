@@ -26,6 +26,11 @@ export default class Index extends React.Component<IndexProps, IndexState>
     {
         super(props);
     }
+
+    public componentDidMount()
+    {
+        $(".hello").css("color", "gray");
+    }
     
     public render()
     {
