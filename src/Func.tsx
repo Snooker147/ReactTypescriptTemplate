@@ -1,7 +1,7 @@
 import * as React from "react";
 
 // Props Structure
-export interface FuncProps { name: string }
+export interface FuncProps { name: string; }
 
 export default (p: FuncProps) => {
     return (
@@ -9,4 +9,4 @@ export default (p: FuncProps) => {
             Hello My Name Is {p.name}
         </div>
     );
-}
+};

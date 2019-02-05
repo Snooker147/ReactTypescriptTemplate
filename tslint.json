@@ -1,0 +1,27 @@
+{
+    "rules": {
+        "no-reference": true,
+        "no-var-requires": true,
+        "await-promise": true,
+        "no-construct": true,
+        "no-duplicate-super": true,
+        "no-duplicate-switch-case": true,
+        "no-duplicate-variable": true,
+        "no-eval": true,
+        "no-unused-expression": true,
+        "no-floating-promises": true,
+        "no-shadowed-variable": true,
+        "no-string-throw": true,
+        "no-var-keyword": true,
+        "radix": true,
+        "triple-equals": [true, "allow-null-check", "allow-undefined-check"],
+        "prefer-const": true,
+        "prefer-readonly": true,
+        "class-name": true,
+        "encoding": true,
+        "no-irregular-whitespace": true,
+        "quotemark": [true, "double", "backtick"],
+        "semicolon": [true, "always"],
+        "switch-final-break": true
+    }
+}

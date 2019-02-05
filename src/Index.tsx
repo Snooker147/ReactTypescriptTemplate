@@ -6,7 +6,7 @@ import Func from "./Func";
 // Typically you should only import it once
 // That will speed up the process and also makes it simpler for managing
 // All styles should be inside the style folder prefixed with understore to indicate that they are inline
-import "./style/Master.scss";
+import "./Index.scss";
 
 // Importing images example
 // Because of how typescript is configured, you have to use the "Import Everything As" non-sense
@@ -21,7 +21,7 @@ export interface IndexState { }
 
 export default class Index extends React.Component<IndexProps, IndexState>
 {
-    
+
     public constructor(props: IndexProps)
     {
         super(props);
@@ -55,5 +55,5 @@ export default class Index extends React.Component<IndexProps, IndexState>
 
 ReactDOM.render(
     <Index />,
-    document.querySelector("#app")
+    document.getElementById("app")
 );

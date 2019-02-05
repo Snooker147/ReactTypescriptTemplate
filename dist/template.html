@@ -8,8 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="<%= htmlWebpackPlugin.options.fontawesome %>" />
+    <%= require('./../webpack.config.libs.js').links() %>
 
     <title>React TypeScript Example</title>
 </head>
@@ -17,8 +16,6 @@
 <body>    
     <div id="app"></div>
 
-    <script src="<%= htmlWebpackPlugin.options.jquery %>"></script>
-    <script src="<%= htmlWebpackPlugin.options.react %>"></script>
-    <script src="<%= htmlWebpackPlugin.options.reactDom %>"></script>
+    <%= require('./../webpack.config.libs.js').scripts() %>
 </body>
 </html>
