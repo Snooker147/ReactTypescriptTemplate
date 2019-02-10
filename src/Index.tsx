@@ -12,6 +12,7 @@ import "./Index.scss";
 // Because of how typescript is configured, you have to use the "Import Everything As" non-sense
 // But other than that it work just as fine
 import * as SrcTestImage from "./assets/test.png";
+import * as SrcSunsetImage from "./assets/sunset.png";
 
 // Global (or internal) import is accesible in every src file.
 // Simply prefix them with @internals/ followed by the file you wish to include from src-internals directory.
@@ -45,10 +46,14 @@ export default class Index extends React.Component<IndexProps, IndexState>
                     Hello World!
                 </span>
 
-                <img src={SrcTestImage} alt=""/>
+                <img src={SrcTestImage} alt="" />
 
                 <div>
                     <i className="fas fa-ambulance"></i>
+                </div>
+
+                <div>
+                    <img src={SrcSunsetImage} alt="" />
                 </div>
 
                 <Func name="Bob" />

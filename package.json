@@ -11,7 +11,8 @@
 	"scripts": {
 		"start": "webpack-dev-server -d",
 		"start-https": "webpack-dev-server -d --use-https",
-		"build": "webpack -p --release"
+		"build": "webpack -p --release",
+		"build-no-cdn": "webpack -p --release-no-cdn"
 	},
 	"keywords": [],
 	"author": "Dominik 'Snooker147' Rataj <snooker147.server@gmail.com> (https://twitter.com/MrSnooker_147)",
@@ -45,5 +46,8 @@
 		"webpack": "4.28.3",
 		"webpack-cli": "3.1.2",
 		"webpack-dev-server": "3.1.14"
+	},
+	"devDependencies": {
+		"fs-extra": "^7.0.1"
 	}
 }

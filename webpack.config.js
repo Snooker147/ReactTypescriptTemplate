@@ -5,14 +5,17 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
+// Paths configuration
+const PathsConfig = require("./webpack.config.paths");
+
 // By default all builds are treated as development
 // We do not use enviroment variables here as it's really a builder for projects so to speak
 // Therefor we simply check for --release flag within the build script
 // This way its clear which script is for production (release) and which isnt 
-const isRelease = process.argv.indexOf("--release") !== -1;
+const isRelease = process.argv.indexOf("--release") !== -1 || process.argv.indexOf("--release-no-cdn") !== -1;
 
 // To pass to other configs
-fs.writeFileSync("dist/release", isRelease);
+fs.writeFileSync(PathsConfig.releaseConfigName, process.argv.indexOf("--release-no-cdn") !== -1 ? "release-no-cdn" : (isRelease ? "release" : "debug" ));
 
 // See README
 const useHTTPS = process.argv.indexOf("--use-https") !== -1;
@@ -30,8 +33,8 @@ module.exports = {
     entry: `${__dirname}/src/Index.tsx`,
 
     output: {
-        filename: "bundle.js",
-        path: `${__dirname}/dist/build`
+        filename: PathsConfig.bundleFileName,
+        path: `${__dirname}/${PathsConfig.distribution}`
     },
 
     devtool: isRelease ? false : "source-map",
@@ -87,9 +90,9 @@ module.exports = {
                     {
                         loader: "url-loader",
                         options: {
-                            outputPath: "assets/",
+                            outputPath: PathsConfig.assets,
                             limit: 8196,
-                            fallback: "file-loader?outputPath=assets/"
+                            fallback: "file-loader?outputPath=" + PathsConfig.assets
                         }
                     }
                 ]
@@ -104,14 +107,15 @@ module.exports = {
                 removeComments: true,
                 useShortDoctype: true
             } : false,
-            filename: "index.html",
-            template: `${__dirname}/dist/template.html`
+            favicon: PathsConfig.favicon,
+            filename: PathsConfig.outputName,
+            template: `${__dirname}/${PathsConfig.templateName}`
         }),
         new MiniCssExtractPlugin({
             filename: "[name].css",
             chunkFilename: "[id].css"
         }),
-        new CleanWebpackPlugin(["dist/build"])
+        new CleanWebpackPlugin([PathsConfig.distribution])
     ],
 
     externals: {
@@ -122,8 +126,8 @@ module.exports = {
     devServer: {
         contentBase: contentBase,
         https: useHTTPS ? {
-            key: fs.readFileSync(`${__dirname}/certs/serverkey.pem`),
-            cert: fs.readFileSync(`${__dirname}/certs/servercert.pem`)
+            key: fs.readFileSync(`${__dirname}/${PathsConfig.certPathKey}`),
+            cert: fs.readFileSync(`${__dirname}/${PathsConfig.certPathCert}`)
         } : false,
         compress: false,
         port: 9000,
