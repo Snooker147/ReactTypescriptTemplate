@@ -1,4 +1,8 @@
 {
+	"ImportImage": {
+		"prefix": "ImportImage",
+		"body": "import * as NewImage from \"$1\";"
+	},
 	"ImportEverythingAs": {
 		"prefix": "ImportEverythingAs",
 		"body": "import * as $1 from \"package\";"

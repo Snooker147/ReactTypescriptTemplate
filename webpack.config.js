@@ -133,6 +133,7 @@ module.exports = {
         port: 9000,
         open: true,
         clientLogLevel: 'none',
+        historyApiFallback: true, // allows rooting, disable if you are not using rooting
         overlay: true,
         proxy: {
             "/api": "http://localhost:9001" // In case its needed for server :)

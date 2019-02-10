@@ -4,11 +4,6 @@ const fsExtra = require("fs-extra");
 // Paths configuration
 const PathsConfig = require("./webpack.config.paths");
 
-if(!fs.existsSync(PathsConfig.distribution))
-{
-    fs.mkdirSync(PathsConfig.distribution);
-}
-
 /** @type {"debug" | "release" | "release-no-cdn"} */
 const configuration = fs.readFileSync(PathsConfig.releaseConfigName, "utf8");
 
@@ -47,6 +42,28 @@ const libs = [
         node: "react-dom/umd"
     },
     {
+        type: "js",
+        src: {
+            debug: "react-router.js",
+            release: "https://cdnjs.cloudflare.com/ajax/libs/react-router/4.3.1/react-router.min.js",
+            releaseFiles: [
+                "react-router.min.js"
+            ]
+        },
+        node: "react-router/umd"
+    },
+    {
+        type: "js",
+        src: {
+            debug: "react-router-dom.js",
+            release: "https://cdnjs.cloudflare.com/ajax/libs/react-router-dom/4.3.1/react-router-dom.min.js",
+            releaseFiles: [
+                "react-router-dom.min.js"
+            ]
+        },
+        node: "react-router-dom/umd"
+    },
+    {
         type: "css",
         src: {
             debug: "fontawesome-free/css/all.min.css",
@@ -61,6 +78,11 @@ const libs = [
         node: "@fortawesome"
     }
 ];
+
+if(!fs.existsSync(PathsConfig.distribution))
+{
+    fs.mkdirSync(PathsConfig.distribution);
+}
 
 const getHTMLLinkage = (file) =>
 {
@@ -118,7 +140,7 @@ const processLib = (lib) =>
         
         return ret.map(rf => getHTMLLinkage(`${PathsConfig.thirdparty}/${rf}`)).join("");
     }
-    
+
     return getHTMLLinkage(`${configuration === "release" ? lib.src.release : lib.src.debug}`);
 }
 

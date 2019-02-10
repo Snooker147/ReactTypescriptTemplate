@@ -3,6 +3,7 @@ Sample template for React using TypeScript and webpack.
 
 # Packages
 This template project includes following packages:
+- React and React Router
 - TSLint (Autoconfigured => see tslint.json)
 - PostCSS and AutoPrefixer
 - Webpack Dev Server
@@ -26,6 +27,9 @@ Then simply start the dev server using "npm run-script start-https" or script-st
 
 # JQuery
 jQuery is included with this project, though you dont have to or need to use it. As React itself states, it's not recommended to use libraries like jQuery with React, but sometimes it's just easier to use jQuery for things like lazy animations and so on. Use it at your own risk. 
+
+# React Router
+React Router comes preconfigured with sample pages. See Index to see how it's implemented.
 
 # Third Party Libraries
 See webpack.config.libs.js to see how third party libraries are configured. There will be upcoming support for chunks to include compressed libraries files for yourself in the future. Right now you can simply change the "release" property to match your desired distributed library files for release instead of the CDN delivered  
