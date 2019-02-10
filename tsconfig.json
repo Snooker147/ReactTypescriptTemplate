@@ -15,12 +15,14 @@
         "lib": ["dom", "es2016"],
         "baseUrl": ".",
         "paths": {
-            "*": [ "custom_typings/*" ]
+            "*": [ "custom_typings/*" ],
+            "@internals/*": [ "src-internals/*" ]
         }
     },
     "include": [
         "./custom_typings/**/*",
-        "./src/**/*"
+        "./src/**/*",
+        "./src-internals/**/*"
     ],
     "exclude": [
         "node_modules/**/*"

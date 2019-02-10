@@ -1,4 +1,6 @@
-const isRelease = process.argv.indexOf("--release") !== -1;
+const fs = require("fs");
+
+const isRelease = fs.readFileSync("dist/release", { encoding: "utf8" }) === "true";
 
 const libs = [
     {

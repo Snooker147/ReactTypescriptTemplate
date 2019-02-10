@@ -11,6 +11,9 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 // This way its clear which script is for production (release) and which isnt 
 const isRelease = process.argv.indexOf("--release") !== -1;
 
+// To pass to other configs
+fs.writeFileSync("dist/release", isRelease);
+
 // See README
 const useHTTPS = process.argv.indexOf("--use-https") !== -1;
 

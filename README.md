@@ -30,6 +30,9 @@ jQuery is included with this project, though you dont have to or need to use it.
 # Third Party Libraries
 See webpack.config.libs.js to see how third party libraries are configured. There will be upcoming support for chunks to include compressed libraries files for yourself in the future. Right now you can simply change the "release" property to match your desired distributed library files for release instead of the CDN delivered  
 
+# Internals
+There's also a predefined internals folder (src-internals) which is global for every TypeScript file and accessbile using "@internals/" import then followed by the file you wish to import. This is useful for large projects and utility files that are not a "real" part of the Frontend endpoint.
+
 # Windows Scripts
 You can also use script by simply running the batch files if you're too lazy to issue them yourself.
 
