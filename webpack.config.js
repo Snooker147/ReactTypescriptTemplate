@@ -1,40 +1,37 @@
 const fs = require("fs");
 
+const Webpack = require("webpack"); 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
-// Paths configuration
-const PathsConfig = require("./webpack.config.paths");
+// Configuration
+const Config = require("./webpack.config.vars");
 
 // By default all builds are treated as development
 // We do not use enviroment variables here as it's really a builder for projects so to speak
 // Therefor we simply check for --release flag within the build script
 // This way its clear which script is for production (release) and which isnt 
-const isRelease = process.argv.indexOf("--release") !== -1 || process.argv.indexOf("--release-no-cdn") !== -1;
-
-// To pass to other configs
-fs.writeFileSync(PathsConfig.releaseConfigName, process.argv.indexOf("--release-no-cdn") !== -1 ? "release-no-cdn" : (isRelease ? "release" : "debug" ));
+const isRelease = process.argv.indexOf("--release") !== -1;
 
 // See README
-const useHTTPS = process.argv.indexOf("--use-https") !== -1;
+const useHTTPS = Config.https;
 
-// See declaration of third-party libraries inside webpack.config.libs files
-// They contain declaration for where to find development files as well as CDN file locations
-// We're going to support chunks in the future (I promise)
-const libs = require("./webpack.config.libs").libs;
-
-// Content base declaration
-const contentBase = libs.map(lib => `${__dirname}/node_modules/${lib.node}`);
-contentBase.push(`${__dirname}/dist`);
+// Proxy configuration
+const proxy = {};
+proxy[Config.backendApiPrefix] = Config.proxy;
 
 module.exports = {
-    entry: `${__dirname}/src/Index.tsx`,
+    entry: `${__dirname}/${Config.entry}`,
 
     output: {
-        filename: PathsConfig.bundleFileName,
-        path: `${__dirname}/${PathsConfig.distribution}`
+        filename: Config.paths.bundleFileName,
+        path: `${__dirname}/${Config.paths.distribution}`
+    },
+
+    performance: {
+        hints: false
     },
 
     devtool: isRelease ? false : "source-map",
@@ -80,19 +77,26 @@ module.exports = {
                     isRelease ? MiniCssExtractPlugin.loader : "style-loader",
                     "css-loader",
                     "postcss-loader",
-                    "sass-loader"
+                    {
+                        loader: "sass-loader",
+                        options: {
+                            includePaths: [
+                                "./node_modules"
+                            ]
+                        }
+                    }
                 ]
             },
 
             {
-                test: /\.(png|jpg|jpeg|gif|svg|bmp)$/,
+                test: /\.(png|jpg|jpeg|gif|svg|bmp|ttf|otf|eot|woff2|woff)$/,
                 use: [
                     {
                         loader: "url-loader",
                         options: {
-                            outputPath: PathsConfig.assets,
-                            limit: 8196,
-                            fallback: "file-loader?outputPath=" + PathsConfig.assets
+                            outputPath: Config.paths.assets,
+                            limit: Config.assetEncodeMaxSize,
+                            fallback: "file-loader?outputPath=" + Config.paths.assets
                         }
                     }
                 ]
@@ -101,42 +105,38 @@ module.exports = {
     },
 
     plugins: [
+        new Webpack.DefinePlugin({
+            webpackCfg: {
+                useHTTPs: JSON.stringify(Config.https),
+                site: JSON.stringify(isRelease ? Config.sitename.release : Config.sitename.debug),
+                apiPrefix: JSON.stringify(Config.backendApiPrefix)
+            }
+        }),
         new HtmlWebpackPlugin({
-            minify: isRelease ? {
-                collapseWhitespace: true,
-                removeComments: true,
-                useShortDoctype: true
-            } : false,
-            favicon: PathsConfig.favicon,
-            filename: PathsConfig.outputName,
-            template: `${__dirname}/${PathsConfig.templateName}`
+            minify: isRelease ? Config.htmlMinify : false,
+            favicon: Config.paths.favicon,
+            filename: Config.paths.outputName,
+            template: `${__dirname}/${Config.paths.templateName}`
         }),
         new MiniCssExtractPlugin({
             filename: "[name].css",
             chunkFilename: "[id].css"
         }),
-        new CleanWebpackPlugin([PathsConfig.distribution])
+        new CleanWebpackPlugin([Config.paths.distribution])
     ],
 
-    externals: {
-        "react": "React",
-        "react-dom": "ReactDOM"
-    },
-
     devServer: {
-        contentBase: contentBase,
+        contentBase: Config.paths.serveContentBase,
         https: useHTTPS ? {
-            key: fs.readFileSync(`${__dirname}/${PathsConfig.certPathKey}`),
-            cert: fs.readFileSync(`${__dirname}/${PathsConfig.certPathCert}`)
+            key: fs.readFileSync(`${__dirname}/${Config.paths.certPathKey}`),
+            cert: fs.readFileSync(`${__dirname}/${Config.paths.certPathCert}`)
         } : false,
-        compress: false,
-        port: 9000,
-        open: true,
+        compress: Config.devServer.compress,
+        port: Config.devServer.port,
+        open: Config.devServer.autoOpen,
         clientLogLevel: 'none',
-        historyApiFallback: true, // allows rooting, disable if you are not using rooting
-        overlay: true,
-        proxy: {
-            "/api": "http://localhost:9001" // In case its needed for server :)
-        }
+        historyApiFallback: Config.devServer.useRouting, // allows rooting, disable if you are not using rooting
+        overlay: Config.devServer.errOverlay,
+        proxy: proxy
     }
 };
