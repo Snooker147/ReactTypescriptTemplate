@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Button, IconButton, Icon } from "@material-ui/core";
 
 // Props Structure
 export interface HomeProps { }
@@ -6,7 +7,14 @@ export interface HomeProps { }
 export default (p: HomeProps) => {
     return (
         <div>
-            Home Component
+
+            <Button variant="contained">
+                Test!
+            </Button>
+
+            <IconButton>
+                <Icon>error</Icon>
+            </IconButton>
         </div>
     );
 };

@@ -63,6 +63,7 @@ const libs = [
         },
         node: "react-router-dom/umd"
     },
+    /*
     {
         type: "css",
         src: {
@@ -77,6 +78,7 @@ const libs = [
         },
         node: "@fortawesome"
     }
+    */
 ];
 
 if(!fs.existsSync(PathsConfig.distribution))

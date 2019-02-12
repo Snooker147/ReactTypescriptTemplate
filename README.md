@@ -10,7 +10,7 @@ This template project includes following packages:
 - URL and File Loader
 - SASS (and CSS minifier for production)
 - HTML Template
-- Font Awesome (Free Version)
+- Material UI (Material Icons are also included)
 - JQuery
 
 # Scripts
@@ -20,10 +20,10 @@ This template project includes following packages:
 - npm run-script start-https => HTTPS Development Server (read below)
 
 # HTTPS Development Server
-HTTPS Dev server configuration is supported with npm scripts. Before you start using HTTPS connection you must first create self-signed certificates for your dev server to use. You can either use the batch file script-make-certificates that will automatically generate certificates using OpenSSL for you (note that you need to have OpenSSL installed on your system).
-You can also make them yourself if you like. By default files "serverkey.pem" and "servercert.pem" must be present within the certs folder. If you wish to change dev server https configuration, you can do so in webpack.config.js down in the devServer section.
+HTTPS Dev server configuration is supported. To enable it, go to webpack.config.vars.js and change "https" to "true". Before you start using HTTPS you must first create self-signed certificates for your dev server to use. You can either use the batch file script-make-certificates that will automatically generate certificates using OpenSSL for you (note that you need to have OpenSSL installed on your system).
+You can also make them yourself if you like. By default, files "serverkey.pem" and "servercert.pem" must be present within the certs folder. If you wish to change dev server https configuration, you can do so in webpack.config.js down in the devServer section.
 
-Then simply start the dev server using "npm run-script start-https" or script-start-https batch file.
+Then simply start the project using npm start as usual.
 
 # JQuery
 jQuery is included with this project, though you dont have to or need to use it. As React itself states, it's not recommended to use libraries like jQuery with React, but sometimes it's just easier to use jQuery for things like lazy animations and so on. Use it at your own risk. 

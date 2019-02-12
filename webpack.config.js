@@ -1,9 +1,13 @@
 const fs = require("fs");
 
+const Webpack = require("webpack"); 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+
+// Configuration
+const Config = require("./webpack.config.vars");
 
 // Paths configuration
 const PathsConfig = require("./webpack.config.paths");
@@ -14,20 +18,23 @@ const PathsConfig = require("./webpack.config.paths");
 // This way its clear which script is for production (release) and which isnt 
 const isRelease = process.argv.indexOf("--release") !== -1 || process.argv.indexOf("--release-no-cdn") !== -1;
 
-// To pass to other configs
-fs.writeFileSync(PathsConfig.releaseConfigName, process.argv.indexOf("--release-no-cdn") !== -1 ? "release-no-cdn" : (isRelease ? "release" : "debug" ));
-
 // See README
-const useHTTPS = process.argv.indexOf("--use-https") !== -1;
+const useHTTPS = Config.https;
 
 // See declaration of third-party libraries inside webpack.config.libs files
 // They contain declaration for where to find development files as well as CDN file locations
-// We're going to support chunks in the future (I promise)
 const libs = require("./webpack.config.libs").libs;
 
 // Content base declaration
 const contentBase = libs.map(lib => `${__dirname}/node_modules/${lib.node}`);
 contentBase.push(`${__dirname}/dist`);
+
+// To pass to other configs
+fs.writeFileSync(PathsConfig.releaseConfigName, process.argv.indexOf("--release-no-cdn") !== -1 ? "release-no-cdn" : (isRelease ? "release" : "debug" ));
+
+// Proxy configuration
+const proxy = {};
+proxy[Config.backendApiPrefix] = Config.proxy;
 
 module.exports = {
     entry: `${__dirname}/src/Index.tsx`,
@@ -80,18 +87,25 @@ module.exports = {
                     isRelease ? MiniCssExtractPlugin.loader : "style-loader",
                     "css-loader",
                     "postcss-loader",
-                    "sass-loader"
+                    {
+                        loader: "sass-loader",
+                        options: {
+                            includePaths: [
+                                "./node_modules"
+                            ]
+                        }
+                    }
                 ]
             },
 
             {
-                test: /\.(png|jpg|jpeg|gif|svg|bmp)$/,
+                test: /\.(png|jpg|jpeg|gif|svg|bmp|ttf)$/,
                 use: [
                     {
                         loader: "url-loader",
                         options: {
                             outputPath: PathsConfig.assets,
-                            limit: 8196,
+                            limit: Config.assetEncodeMaxSize,
                             fallback: "file-loader?outputPath=" + PathsConfig.assets
                         }
                     }
@@ -101,12 +115,15 @@ module.exports = {
     },
 
     plugins: [
+        new Webpack.DefinePlugin({
+            webpackCfg: {
+                useHTTPs: JSON.stringify(Config.https),
+                site: JSON.stringify(isRelease ? Config.sitename.release : Config.sitename.debug),
+                apiPrefix: JSON.stringify(Config.backendApiPrefix)
+            }
+        }),
         new HtmlWebpackPlugin({
-            minify: isRelease ? {
-                collapseWhitespace: true,
-                removeComments: true,
-                useShortDoctype: true
-            } : false,
+            minify: isRelease ? Config.htmlMinify : false,
             favicon: PathsConfig.favicon,
             filename: PathsConfig.outputName,
             template: `${__dirname}/${PathsConfig.templateName}`
@@ -118,10 +135,12 @@ module.exports = {
         new CleanWebpackPlugin([PathsConfig.distribution])
     ],
 
+    /*
     externals: {
         "react": "React",
         "react-dom": "ReactDOM"
     },
+    */
 
     devServer: {
         contentBase: contentBase,
@@ -129,14 +148,12 @@ module.exports = {
             key: fs.readFileSync(`${__dirname}/${PathsConfig.certPathKey}`),
             cert: fs.readFileSync(`${__dirname}/${PathsConfig.certPathCert}`)
         } : false,
-        compress: false,
-        port: 9000,
-        open: true,
+        compress: Config.devServer.compress,
+        port: Config.devServer.port,
+        open: Config.devServer.autoOpen,
         clientLogLevel: 'none',
-        historyApiFallback: true, // allows rooting, disable if you are not using rooting
-        overlay: true,
-        proxy: {
-            "/api": "http://localhost:9001" // In case its needed for server :)
-        }
+        historyApiFallback: Config.devServer.useRouting, // allows rooting, disable if you are not using rooting
+        overlay: Config.devServer.errOverlay,
+        proxy: proxy
     }
 };
