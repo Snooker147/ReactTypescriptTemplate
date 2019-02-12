@@ -1,7 +1,11 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Route, BrowserRouter, Switch } from "react-router-dom";
+import { MuiThemeProvider, CssBaseline } from "@material-ui/core";
 
+import createTheme from "./MaterialUIStyle";
+
+import Header from "./Header";
 import About from "./page/About";
 import Home from "./page/Home";
 import NotFound from "./page/NotFound";
@@ -18,11 +22,6 @@ import * as SrcSunsetImage from "./assets/sunset.png";
 // Global (or internal) import is accesible in every src file.
 // Simply prefix them with @internals/ followed by the file you wish to include from src-internals directory.
 import Utils from "@internals/Utils";
-
-import Action, { MyActionFunction } from "@internals/backend/Action";
-import { MuiThemeProvider, Button, CssBaseline } from "@material-ui/core";
-import createTheme from "./MaterialUIStyle";
-import Header from "./Header";
 
 // Props Structure
 export interface IndexProps { }

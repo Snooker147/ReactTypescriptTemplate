@@ -10,8 +10,7 @@
 	"main": "src/Index.js",
 	"scripts": {
 		"start": "webpack-dev-server -d",
-		"build": "webpack -p --release",
-		"build-no-cdn": "webpack -p --release-no-cdn"
+		"build": "webpack -p --release"
 	},
 	"keywords": [],
 	"author": "Dominik 'Snooker147' Rataj <snooker147.server@gmail.com> (https://twitter.com/MrSnooker_147)",
