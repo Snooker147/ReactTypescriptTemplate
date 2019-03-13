@@ -1,10 +1,5 @@
 {
     "compilerOptions": {
-        "typeRoots": [
-            "node_modules/@types",
-            "./custom_typings"
-        ],
-        "moduleResolution": "node",
         "outDir": "./dist/build",
         "sourceMap": true,
         "noImplicitAny": false,
@@ -12,17 +7,11 @@
         "target": "es6",
         "jsx": "react",
         "allowJs": true,
-        "lib": ["es6", "dom"],
-        "baseUrl": ".",
-        "paths": {
-            "*": [ "custom_typings/*" ],
-            "@internals/*": [ "src-internals/*" ]
-        }
+        "lib": ["es6", "dom"]
     },
     "include": [
         "./custom_typings/**/*",
-        "./src/**/*",
-        "./src-internals/**/*"
+        "./src/**/*"
     ],
     "exclude": [
         "node_modules/**/*"

@@ -19,10 +19,6 @@ import "./style/Style.scss";
 import * as SrcTestImage from "./assets/test.png";
 import * as SrcSunsetImage from "./assets/sunset.png";
 
-// Global (or internal) import is accesible in every src file.
-// Simply prefix them with @internals/ followed by the file you wish to include from src-internals directory.
-import Utils from "@internals/Utils";
-
 // Props Structure
 export interface IndexProps { }
 // State Structure
@@ -34,11 +30,6 @@ export default class Index extends React.Component<IndexProps, IndexState>
     public constructor(props: IndexProps)
     {
         super(props);
-    }
-
-    public async componentDidMount()
-    {
-        //const a = await Action.post("test", { test: "a value", test2: 25, test3: false });
     }
     
     public render()

@@ -3,8 +3,6 @@ const fs = require("fs");
 const Webpack = require("webpack"); 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 // Configuration
 const Config = require("./webpack.config.vars");
@@ -42,9 +40,6 @@ module.exports = {
             ".tsx", 
             ".js", 
             ".json"
-        ],
-        plugins: [
-            new TsconfigPathsPlugin()
         ]
     },
 
@@ -121,8 +116,7 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: "[name].css",
             chunkFilename: "[id].css"
-        }),
-        new CleanWebpackPlugin([Config.paths.distribution])
+        })
     ],
 
     devServer: {

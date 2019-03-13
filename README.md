@@ -10,8 +10,7 @@ This template project includes following packages:
 - URL and File Loader
 - SASS (and CSS minifier for production)
 - HTML Template
-- Material UI (Material Icons are also included)
-- JQuery
+- Material UI/IO (Material Icons are also included)
 
 # Scripts
 - npm install => Required for first time use. Installs all required packages (surprisingly)
@@ -24,9 +23,6 @@ HTTPS Dev server configuration is supported. To enable it, go to webpack.config.
 You can also make them yourself if you like. By default, files "serverkey.pem" and "servercert.pem" must be present within the certs folder. If you wish to change dev server https configuration, you can do so in webpack.config.js down in the devServer section.
 
 Then simply start the project using npm start as usual.
-
-# JQuery
-jQuery is included with this project, though you dont have to or need to use it. As React itself states, it's not recommended to use libraries like jQuery with React, but sometimes it's just easier to use jQuery for things like lazy animations and so on. Use it at your own risk. 
 
 # React Router
 React Router comes preconfigured with sample pages. See Index to see how it's implemented.
