@@ -1,9 +1,8 @@
 import * as React from "react";
 
-// Props Structure
-export interface AboutProps { }
+interface Props { }
 
-export default (p: AboutProps) => {
+export default (p: Props) => {
     return (
         <div>
             About Component

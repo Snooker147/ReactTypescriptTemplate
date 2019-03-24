@@ -1,9 +1,8 @@
 import * as React from "react";
 
-// Props Structure
-export interface NotFoundProps { }
+interface Props { }
 
-export default (p: NotFoundProps) => {
+export default (p: Props) => {
     return (
         <div>
             Page Not Found!

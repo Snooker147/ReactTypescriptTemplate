@@ -1,17 +1,13 @@
 import * as React from "react";
-import { AppBar, Typography, Toolbar, IconButton, Icon, Avatar, Button } from "@material-ui/core";
+import { AppBar, Typography, Toolbar, IconButton, Icon, Button } from "@material-ui/core";
 
-// Props Structure
-export interface HeaderProps { }
-// State Structure
-export interface HeaderState { }
+interface Props { }
+interface State { }
 
-// Expansion panel
-
-export default class Header extends React.Component<HeaderProps, HeaderState>
+export default class Header extends React.Component<Props, State>
 {
     
-    public constructor(props: HeaderProps)
+    public constructor(props: Props)
     {
         super(props);
     }

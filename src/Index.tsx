@@ -1,7 +1,10 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import { create } from "jss";
+import { JssProvider } from "react-jss";
 import { Route, BrowserRouter, Switch } from "react-router-dom";
 import { MuiThemeProvider, CssBaseline } from "@material-ui/core";
+import { createGenerateClassName, jssPreset } from "@material-ui/core/styles";
 
 import createTheme from "./MaterialUIStyle";
 
@@ -16,42 +19,53 @@ import NotFound from "./page/NotFound";
 import "./style/Style.scss";
 
 // Importing images example
-import * as SrcTestImage from "./assets/test.png";
-import * as SrcSunsetImage from "./assets/sunset.png";
+import SrcTestImage from "./assets/imgs/test.png";
+import SrcSunsetImage from "./assets/imgs/sunset.png";
 
-// Props Structure
-export interface IndexProps { }
-// State Structure
-export interface IndexState { }
+interface Props { }
+interface State { }
 
-export default class Index extends React.Component<IndexProps, IndexState>
+export default class Index extends React.Component<Props, State>
 {
 
-    public constructor(props: IndexProps)
+    public constructor(props: Props)
     {
         super(props);
     }
     
     public render()
     {
+        const generateClassName = createGenerateClassName();
+        const jss = create({
+            ...jssPreset(),
+            insertionPoint: document.getElementById("jss-insertion-point"),
+        });
+          
         return (
-            <MuiThemeProvider theme={createTheme()}>
-                <CssBaseline />
+            <JssProvider jss={jss} generateClassName={generateClassName}>
+                <MuiThemeProvider theme={createTheme()}>
+                    <CssBaseline />
 
-                <React.Fragment>
-                    <Header />
+                    <React.Fragment>
+                        <Header />
 
-                    { /* Router Setup */ }
-                    <BrowserRouter>
-                        <Switch>
-                            <Route path="/about" component={About} />
-                            <Route path="/" exact component={Home} />
-                            <Route component={NotFound} />
-                        </Switch>
-                    </BrowserRouter>
-                
-                </React.Fragment>
-            </MuiThemeProvider>
+                        <div>
+                            <img src={SrcTestImage} alt=""/>
+                            <img src={SrcSunsetImage} alt=""/>
+                        </div>
+
+                        { /* Router Setup */ }
+                        <BrowserRouter>
+                            <Switch>
+                                <Route path="/about" component={About} />
+                                <Route path="/" exact component={Home} />
+                                <Route component={NotFound} />
+                            </Switch>
+                        </BrowserRouter>
+                    
+                    </React.Fragment>
+                </MuiThemeProvider>
+            </JssProvider>
         );
     }
 

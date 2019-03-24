@@ -1,10 +1,9 @@
 import * as React from "react";
 import { Button, IconButton, Icon } from "@material-ui/core";
 
-// Props Structure
-export interface HomeProps { }
+interface Props { }
 
-export default (p: HomeProps) => {
+export default (p: Props) => {
     return (
         <div>
 
