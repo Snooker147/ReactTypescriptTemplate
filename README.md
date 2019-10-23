@@ -1,3 +1,6 @@
+# Deprecated
+This uses old Setup and versions of MUI, look at https://github.com/Snooker147/ReactMaterialUITemplate for updated and more simplified version
+
 # React TypeScript Template
 Sample template for React using TypeScript and webpack.
 
